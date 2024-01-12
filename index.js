@@ -50,7 +50,7 @@ app.get('/news', (req, res) => {
     // Construct image URLs based on your server setup
     const newsWithImageURLs = result.map(news => ({
       ...news,
-      image: `http://sql12.freesqldatabase.com/images/${news.image}`
+      image: `https://newsapp-za0p.onrender.com/images/${news.image}`
     }));
 
     return res.json(newsWithImageURLs);
@@ -87,7 +87,7 @@ app.put('/news/:id', upload.single('file'), (req, res) => {
           title: updatedNews.title,
           catagory: updatedNews.catagory,
           body: updatedNews.body,
-          image: `http://sql12.freesqldatabase.com/images/${updatedNews.image}`, // Adjust the URL based on your server setup
+          image: `https://newsapp-za0p.onrender.com/images/${updatedNews.image}`, // Adjust the URL based on your server setup
         },
       });
     });
