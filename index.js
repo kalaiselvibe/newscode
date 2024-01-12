@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
  
 const upload = multer({storage})
 app.post('/news',upload.single('file'), (req, res) => {
-  const sql = "INSERT INTO news (`title`,`catagory`,`body`,`image`) VALUES (?)"; 
+  const sql = "INSERT INTO product (`title`,`catagory`,`body`,`image`) VALUES (?)"; 
   const values = [
   
       req.body.title,
@@ -41,8 +41,8 @@ app.post('/news',upload.single('file'), (req, res) => {
 })
 
 // GET request to fetch all news articles
-app.get('/getNews', (req, res) => {
-  const sql = 'SELECT * FROM news';
+app.get('/news', (req, res) => {
+  const sql = 'SELECT * FROM product';
 
   conn.query(sql, (err, result) => {
     if (err) return res.json({ Error: "Error fetching employees" });
@@ -61,7 +61,7 @@ app.put('/news/:id', upload.single('file'), (req, res) => {
   const { title, catagory, body } = req.body;
   const image = req.file ? req.file.filename : null;
 
-  const sql = "UPDATE news SET title=?, catagory=?, body=?, image=? WHERE id=?";
+  const sql = "UPDATE product SET title=?, catagory=?, body=?, image=? WHERE id=?";
   const values = [title, catagory, body, image, newsId];
 
   conn.query(sql, values, (err, result) => {
@@ -71,7 +71,7 @@ app.put('/news/:id', upload.single('file'), (req, res) => {
     }
 
     // Fetch the updated news article with the new image URL
-    const fetchUpdatedNewsSql = "SELECT * FROM news WHERE id=?";
+    const fetchUpdatedNewsSql = "SELECT * FROM product WHERE id=?";
     conn.query(fetchUpdatedNewsSql, [newsId], (fetchErr, fetchResult) => {
       if (fetchErr) {
         console.error('Error fetching updated news article:', fetchErr);
@@ -95,7 +95,7 @@ app.put('/news/:id', upload.single('file'), (req, res) => {
 });
 app.delete('/news/:id', (req, res) => {
   const { id } = req.params;
-  const sql = "DELETE FROM news WHERE `id`=?";
+  const sql = "DELETE FROM product WHERE `id`=?";
   
   conn.query(sql, [id], (err, result) => {
     if (err) return res.status(500).json({ error: "Internal server error" });
